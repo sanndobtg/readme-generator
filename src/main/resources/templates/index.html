@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README Generator</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <h1>README Generator</h1>
+                </div>
+                <p class="tagline">Créez des README professionnels en quelques clics</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                
+                <!-- Form Section -->
+                <section class="form-section">
+                    <div class="card">
+                        <h2>Configuration du README</h2>
+                        
+                        <form id="readmeForm">
+                            <!-- Project Name -->
+                            <div class="form-group">
+                                <label for="projectName">Nom du Projet *</label>
+                                <input type="text" id="projectName" name="projectName" 
+                                       placeholder="mon-super-projet" required>
+                            </div>
+
+                            <!-- Tagline -->
+                            <div class="form-group">
+                                <label for="tagline">Tagline (optionnel)</label>
+                                <input type="text" id="tagline" name="tagline" 
+                                       placeholder="Un slogan accrocheur pour votre projet">
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-group">
+                                <label for="description">Description *</label>
+                                <textarea id="description" name="description" rows="4" 
+                                          placeholder="Décrivez votre projet en quelques phrases..." required></textarea>
+                            </div>
+
+                            <!-- Template Type -->
+                            <div class="form-group">
+                                <label for="templateType">Type de Template</label>
+                                <select id="templateType" name="templateType">
+                                    <option value="API">API REST</option>
+                                    <option value="LIBRARY">Library/Package</option>
+                                    <option value="FRONTEND">Frontend App</option>
+                                    <option value="CLI">CLI Tool</option>
+                                    <option value="FULLSTACK">Fullstack App</option>
+                                </select>
+                            </div>
+
+                            <!-- Technologies -->
+                            <div class="form-group">
+                                <label for="technologies">Technologies</label>
+                                <input type="text" id="technologiesInput" 
+                                       placeholder="Appuyez sur Entrée après chaque technologie">
+                                <div id="techTags" class="tech-tags"></div>
+                                <input type="hidden" id="technologies" name="technologies">
+                            </div>
+
+                            <!-- Features -->
+                            <div class="form-group">
+                                <label for="features">Fonctionnalités</label>
+                                <textarea id="features" name="features" rows="4" 
+                                          placeholder="Une fonctionnalité par ligne&#10;Authentification&#10;API RESTful&#10;Base de données"></textarea>
+                            </div>
+
+                            <!-- Installation -->
+                            <div class="form-group">
+                                <label for="installation">Installation</label>
+                                <textarea id="installation" name="installation" rows="3" 
+                                          placeholder="npm install&#10;npm start"></textarea>
+                            </div>
+
+                            <!-- Usage -->
+                            <div class="form-group">
+                                <label for="usage">Utilisation</label>
+                                <textarea id="usage" name="usage" rows="3" 
+                                          placeholder="import myproject&#10;myproject.run()"></textarea>
+                            </div>
+
+                            <!-- Repository URL -->
+                            <div class="form-group">
+                                <label for="repositoryUrl">URL du Repository GitHub</label>
+                                <input type="url" id="repositoryUrl" name="repositoryUrl" 
+                                       placeholder="https://github.com/username/repo">
+                            </div>
+
+                            <!-- Demo URL -->
+                            <div class="form-group">
+                                <label for="demoUrl">URL de Démo</label>
+                                <input type="url" id="demoUrl" name="demoUrl" 
+                                       placeholder="https://demo.example.com">
+                            </div>
+
+                            <!-- License -->
+                            <div class="form-group">
+                                <label for="license">License</label>
+                                <select id="license" name="license">
+                                    <option value="">-- Choisir une license --</option>
+                                    <option value="MIT">MIT</option>
+                                    <option value="Apache-2.0">Apache 2.0</option>
+                                    <option value="GPL-3.0">GPL 3.0</option>
+                                    <option value="BSD-3-Clause">BSD 3-Clause</option>
+                                    <option value="ISC">ISC</option>
+                                </select>
+                            </div>
+
+                            <!-- Author -->
+                            <div class="form-group">
+                                <label for="author">Auteur</label>
+                                <input type="text" id="author" name="author" 
+                                       placeholder="Votre nom">
+                            </div>
+
+                            <!-- Options -->
+                            <div class="form-group">
+                                <label>Options</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="includeBadges" checked>
+                                        <span>Inclure les badges</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="includeTableOfContents">
+                                        <span>Table des matières</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="includeScreenshots">
+                                        <span>Section Screenshots</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="includeContributing" checked>
+                                        <span>Section Contributing</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="includeLicense" checked>
+                                        <span>Section License</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary" id="generateBtn">
+                                Générer le README
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Preview Section -->
+                <section class="preview-section">
+                    <div class="card">
+                        <div class="preview-header">
+                            <h2>Prévisualisation</h2>
+                            <div class="preview-tabs">
+                                <button class="tab-btn active" data-tab="rendered">Rendu</button>
+                                <button class="tab-btn" data-tab="markdown">Markdown</button>
+                            </div>
+                        </div>
+
+                        <div id="previewContent" class="preview-content">
+                            <div class="empty-state">
+                                <p>Remplissez le formulaire et cliquez sur "Générer le README"</p>
+                                <p class="empty-subtitle">La prévisualisation apparaîtra ici</p>
+                            </div>
+                        </div>
+
+                        <div id="previewActions" class="preview-actions" style="display: none;">
+                            <button class="btn btn-secondary" id="copyBtn">
+                                Copier
+                            </button>
+                            <button class="btn btn-secondary" id="downloadBtn">
+                                Télécharger
+                            </button>
+                            <button class="btn btn-success" id="exportBtn">
+                                Exporter vers GitHub
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Exporter vers GitHub</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Pour exporter directement vers votre repository GitHub, vous avez besoin d'un Personal Access Token.</p>
+                
+                <div class="form-group">
+                    <label for="exportRepoUrl">URL du Repository *</label>
+                    <input type="text" id="exportRepoUrl" 
+                           placeholder="https://github.com/username/repo">
+                </div>
+
+                <div class="form-group">
+                    <label for="githubToken">GitHub Token *</label>
+                    <input type="password" id="githubToken" 
+                           placeholder="ghp_xxxxxxxxxxxx">
+                    <small>Créez un token sur <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings</a> avec le scope 'repo'</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelExport">Annuler</button>
+                <button class="btn btn-success" id="confirmExport">Exporter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Génération en cours...</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Made by README Generator Team | 
+               <a href="https://github.com" target="_blank">GitHub</a> | 
+               <a href="/actuator/health" target="_blank">Status</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script th:src="@{/js/marked.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>
