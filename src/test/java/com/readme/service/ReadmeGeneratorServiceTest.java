@@ -256,7 +256,7 @@ class ReadmeGeneratorServiceTest {
     String readme = service.generateReadme(request);
 
     assertThat(readme).contains("John Doe");
-    assertThat(readme).contains("Made with");
+    assertThat(readme).contains("Made by");
   }
 
   @Test

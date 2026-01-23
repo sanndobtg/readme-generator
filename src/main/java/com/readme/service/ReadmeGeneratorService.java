@@ -57,7 +57,12 @@ public class ReadmeGeneratorService {
    * @throws ReadmeGenerationException if generation fails
    */
   public String generateReadme(ReadmeRequest request) throws ReadmeGenerationException {
+	  if (request == null) {
+		    throw new ReadmeGenerationException("Request cannot be null");
+		}  
+	  
     try {
+    	
       logger.info("Generating README for project: {}", request.getProjectName());
       
       validateRequest(request);
@@ -113,7 +118,9 @@ public class ReadmeGeneratorService {
       
       logger.info("README generated successfully for project: {}", request.getProjectName());
       return readme.toString();
-      
+    
+    } catch (ReadmeGenerationException e) {
+        throw e;
     } catch (Exception e) {
       logger.error("Error generating README for project: {}", request.getProjectName(), e);
       throw new ReadmeGenerationException("Failed to generate README: " + e.getMessage(), e);

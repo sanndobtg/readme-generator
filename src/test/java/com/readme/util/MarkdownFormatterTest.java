@@ -155,8 +155,8 @@ class MarkdownFormatterTest {
   void testSanitize() {
     String sanitized = MarkdownFormatter.sanitize("Test * _ [ ]");
     
-    assertThat(sanitized).doesNotContain("*");
-    assertThat(sanitized).doesNotContain("_");
+    assertThat(sanitized).contains("\\*");
+    assertThat(sanitized).contains("\\_");
     assertThat(sanitized).contains("\\*");
     assertThat(sanitized).contains("\\_");
   }
