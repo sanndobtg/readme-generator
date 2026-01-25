@@ -8,6 +8,22 @@
 
 set -e
 
+# ===================================================
+# Put Java 17 for THIS project only
+# ===================================================
+
+JAVA_17_HOME=$(/usr/libexec/java_home -v 17 2>/dev/null || true)
+
+if [ -z "$JAVA_17_HOME" ]; then
+    echo "Java 17 is not installed."
+    echo "Please install it with:"
+    echo "  brew install openjdk@17"
+    exit 1
+fi
+
+export JAVA_HOME="$JAVA_17_HOME"
+export PATH="$JAVA_HOME/bin:$PATH"
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
